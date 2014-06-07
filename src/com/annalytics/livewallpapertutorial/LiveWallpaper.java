@@ -67,7 +67,9 @@ public class LiveWallpaper extends WallpaperService
 		private boolean mVisible = true;
 		private boolean mRunning = false;
 		private boolean mRestart = false;
-		private long mLastDrawTime;
+		private long mLastDrawTime = System.currentTimeMillis();
+		private int mWidth, mHeight;
+		private CanvasPlayer mPlayer;
 		
 		public WallpaperEngine()
 		{
@@ -76,6 +78,7 @@ public class LiveWallpaper extends WallpaperService
 		@Override
 		public void onCreate(SurfaceHolder surfaceHolder)
 		{
+			mPlayer = new CanvasPlayer(getBaseContext());
 			setTouchEventsEnabled(true);
 			super.onCreate(surfaceHolder);
 		}
@@ -116,7 +119,9 @@ public class LiveWallpaper extends WallpaperService
 		@Override
 		public void onSurfaceChanged(SurfaceHolder holder, int format, int width, int height)
 		{
-			Log.d(LOG_TAG, "onSurfaceChanged: (" + width + "x" + height + ")");					
+			Log.d(LOG_TAG, "onSurfaceChanged: (" + width + "x" + height + ")");	
+			mWidth = width;
+			mHeight = height;
 			restart();			
 			super.onSurfaceChanged(holder, format, width, height);
 		}
@@ -153,7 +158,7 @@ public class LiveWallpaper extends WallpaperService
 					if (canvas != null)
 					{		
 						// main draw loop code will go here
-											
+						mPlayer.draw(canvas, mHeight, mWidth, delta);				
 					}
 				}
 				finally
