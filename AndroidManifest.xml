@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.annalytics.livewallpapertutorial"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="18" />
+    <uses-feature android:name="android.software.live_wallpaper" />
+    <permission android:name="android.permission.SET_WALLPAPER"></permission>    
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity android:name="com.annalytics.livewallpapertutorial.MainActivity" android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <service android:name="com.annalytics.livewallpapertutorial.LiveWallpaper" android:enabled="true" android:permission="android.permission.BIND_WALLPAPER" android:label="@string/wallpaper_name">
+			<intent-filter>
+				<action android:name="android.service.wallpaper.WallpaperService"></action>
+			</intent-filter>
+			<meta-data android:name="android.service.wallpaper" android:resource="@xml/wallpaper"></meta-data>
+		</service>
+    </application>
+
+</manifest>
